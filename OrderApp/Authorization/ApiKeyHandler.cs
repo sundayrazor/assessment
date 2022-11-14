@@ -8,8 +8,7 @@ public class ApiKeyHandler
 {
 	private const string ApiKey = "X-API-KEY";
 	private const string ApiKeyValue = "5E5B8267";
-	//private readonly Uri _baseAddress = new(" https://fcinterviewapi01.azurewebsites.net/api/");
-	private readonly Uri _baseAddress = new("https://localhost:7244/api/");
+	private readonly Uri _baseAddress = new(" https://fcinterviewapi01.azurewebsites.net/api/");
 	private readonly HttpClient _client;
 
 	public ApiKeyHandler()
