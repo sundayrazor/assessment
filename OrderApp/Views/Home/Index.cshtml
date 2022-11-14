@@ -1,0 +1,67 @@
+﻿@model List<Product>
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@Context.Session.GetString("MyAwesomeSessionValue")
+<h1>Products</h1>
+<hr/>
+
+@if (!string.IsNullOrEmpty(Context.Session.GetString("Username")))
+{
+	<h4>Select products using the checkbox provided and make an order</h4>
+}
+else
+{
+	<h4>Available products</h4>
+}
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+	<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+		@for (var i = 0; i <  Model.Count; i++)
+		{
+			<input type="hidden" asp-for="@Model[i].ProductID}" />
+			<input type="hidden" asp-for="@Model[i].UnitPrice}" />
+			<div class="col-md-3">
+				<div class="card mb-4 rounded-3 shadow-sm border-primary">
+					<div class="card-header py-3 border-primary">
+						<h4 class="my-0 fw-normal" >@Model[i].ProductName</h4>
+					</div>
+					<div class="card-body">
+						<h1 class="card-title">@($"R{Model[i].UnitPrice}")<small class="text-muted fw-light"></small></h1>
+						<ul class="list-unstyled mt-3 mb-4">
+							<li>@($"Product: {Model[i].ProductName}")</li>
+							<li>@($"Price R{Model[i].UnitPrice:0.00}")</li>
+							@if (!string.IsNullOrEmpty(Context.Session.GetString("Username")))
+							{
+								<li>
+									<div>
+										<label>Quantity:</label>
+										<input type="number" asp-for="@Model[i].Quantity" value="1" style="width: 50px"/>
+									</div>
+								</li>
+								<li >
+									<div>
+										<label>Select:</label>
+										<input type="checkbox" asp-for="@Model[i].IsSelected"/>
+									</div>
+								</li>
+							}
+						</ul>
+						<a class="btn" asp-route-id="@Model[i].ProductID" asp-controller="Home" asp-action="Details">
+							<button type="button" class="btn btn-outline-success">Details</button>
+						</a>
+					</div>
+
+				</div>
+			</div>
+		}
+
+	</div>
+	@if (!string.IsNullOrEmpty(Context.Session.GetString("Username")))
+	{
+		<button class="btn btn-outline-success" type="submit">Make an order</button>
+	}
+}

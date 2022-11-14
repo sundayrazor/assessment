@@ -1,0 +1,24 @@
+﻿@model Product
+
+@{
+	ViewData["Title"] = "Order details";
+}
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+	<div class="col-md-6">
+		<div class="card mb-4 rounded-3 shadow-sm border-primary">
+			<div class="card-header py-3 border-primary">
+				<h4 class="my-0 fw-normal">@Model.ProductName</h4>
+			</div>
+			<div class="card-body">
+				<ul class="list-unstyled mt-3 mb-4">
+					<li>@($"Description:")</li>
+				<li>@($"Price: R{Model?.UnitPrice:0.00}")</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
